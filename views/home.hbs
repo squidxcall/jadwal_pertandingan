@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>MATCHAPP</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="bg-secondary">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
+        <a class="navbar-brand" href="/home">MATCHAPP</a>
+        <button type="button" class="btn btn-md btn-primary font-weight-bold" data-toggle="modal"
+            data-target="#saveModal">
+            CREATE
+        </button>
+    </nav>
+    <div class="container">
+        <table class="table table-dark table-bordered mt-3">
+            <thead>
+                <tr class="text-center">
+                    <th>Competition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each tournament}}
+                <tr>                    
+                    <td><a class="text-decoration-none text-white" href="/tournament/{{ id }}">{{ name }}</a></td>                  
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="/save">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-dark">CREATE NEW COMPETITION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Competition Name:</label>
+                            <input name="name" type="text" class="form-control" placeholder="Competiton Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="sel1">Competition Mode:</label>
+                            <select class="form-control" name="mode">
+                                {{#each mode}}
+                                <option value="{{ id }}">{{ name }}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="team">Team:</label>
+                            <textarea class="form-control" rows="20" name="team" placeholder="1 team per line"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <button type="submit" class="btn btn-primary">SAVE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

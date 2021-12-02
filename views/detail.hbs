@@ -1,0 +1,150 @@
+<html>
+<head>
+    <title>{{ tournamentName }}</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="bg-secondary">
+    <div class="plugin-container">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" href="/home">MATCHAPP</a>
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                        ACTION
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#editModal">EDIT</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#deleteModal">DELETE</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1 class="text-white font-weight-bold mt-3">{{ tournamentName }}</h1>
+        <hr class="bg-white">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h5 class="text-white">{{ tournamentMode }}</h5>
+            </div>
+            <div class="col-md-4">
+                <h5 class="text-white">{{ totalTeam }} teams</h5>
+            </div>
+            <div class="col-md-4">
+                <h5 class="text-white">{{ totalMatch }} matches</h5>
+            </div>
+        </div>
+            
+        <hr class="bg-white">
+        <div class="row">
+            {{#each team}}
+            <div class="col-md-3 text-center text-white font-weight-bold">
+                <h5>{{ this }}</h5>
+            </div>
+            {{/each}}
+        </div>
+        <hr class="bg-white">
+        <table class="table table-dark table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th>Home</th>
+                    <th></th>
+                    <th>Away</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each match}}
+                <tr>
+                    <td class="text-right">{{ left }}</td>
+                    <td class="text-center">VS</td>
+                    <td class="text-left">{{ right }}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="/update">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-dark">UPDATE COMPETITION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="compename">Competition Name:</label>
+                            <input name="name" type="text" class="form-control" placeholder="Competiton Name"
+                                value="{{ tournamentName }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sel1">Competition Mode:</label>                            
+                            <select class="form-control" name="mode">
+                                {{#each mode}}
+                                <option value="{{ id }}">{{ name }}</option>
+                                {{/each}}
+                            </select>
+                        </div>                     
+                        <div class="form-group mt-2">
+                            <label for="team">Team:</label>
+                            <textarea class="form-control" rows="{{ totalTeam }}" name="team">{{ tournamentTeam }}</textarea>
+                        </div>
+                        <input type="hidden" name="id" value="{{ tournamentID }}">                 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <button type="submit" class="btn btn-primary">SAVE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="/delete">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-dark">DELETE COMPETITION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Delete {{ tournamentName }} ?</h5>
+                        <input type="hidden" value="{{ tournamentID }}" name="id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
